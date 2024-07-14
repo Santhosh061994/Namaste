@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "This is Namaste by Santhosh",
   "main": "App.js",
+  "type":"module",
   "scripts": {
+    
     "test": "jest"
   },
   "repository": {
