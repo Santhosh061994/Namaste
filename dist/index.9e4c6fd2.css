@@ -19,7 +19,7 @@
   padding: 10px;
 }
 
-.res-containerr {
+.res-container {
   flex-wrap: wrap;
   display: flex;
 }
@@ -27,7 +27,6 @@
 .res-card {
   background-color: #f0f0f0;
   width: 200px;
-  height: 350px;
   margin: 5px;
   padding: 5px;
 }
