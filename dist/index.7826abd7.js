@@ -28670,7 +28670,17 @@ var _s = $RefreshSig$();
 const Body = ()=>{
     _s();
     //let listOfRestaurants;
-    const [listOfRestaurants, setListOfRestaurant] = (0, _react.useState)((0, _mockDataDefault.default));
+    const [listOfRestaurants, setListOfRestaurant] = (0, _react.useState)([]);
+    (0, _react.useEffect)(()=>{
+        fetchData();
+    }, []);
+    const fetchData = async ()=>{
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.51024246413905&lng=78.36948774755001&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const json = await data.json();
+        console.log("json data");
+        console.log(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        setListOfRestaurant(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "body",
         children: [
@@ -28679,42 +28689,42 @@ const Body = ()=>{
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                     className: "filter-btn",
                     onClick: ()=>{
-                        const filteredList = (0, _mockDataDefault.default).filter((res)=>res.card.card.info.avgRating > 4);
+                        const filteredList = listOfRestaurants.filter((res)=>res.info.avgRating > 4);
                         setListOfRestaurant(filteredList);
                     },
                     children: "Top Rated Restauramts"
                 }, void 0, false, {
                     fileName: "src/components/Body.js",
-                    lineNumber: 16,
+                    lineNumber: 29,
                     columnNumber: 17
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/Body.js",
-                lineNumber: 15,
+                lineNumber: 28,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "res-container",
                 children: listOfRestaurants.map((restaurant)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restaurantCardDefault.default), {
                         res1: restaurant
-                    }, restaurant.card.card.info.id, false, {
+                    }, restaurant.info.id, false, {
                         fileName: "src/components/Body.js",
-                        lineNumber: 26,
+                        lineNumber: 39,
                         columnNumber: 56
                     }, undefined))
             }, void 0, false, {
                 fileName: "src/components/Body.js",
-                lineNumber: 24,
+                lineNumber: 37,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/Body.js",
-        lineNumber: 13,
+        lineNumber: 26,
         columnNumber: 9
     }, undefined);
 };
-_s(Body, "a3b8XIOruoaOlyHon6OsIHbAe1g=");
+_s(Body, "MsRAanb87kX3LOYNY+1hxZMGUDM=");
 _c = Body;
 exports.default = Body;
 var _c;
@@ -28738,15 +28748,15 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _constants = require("../../utils/constants");
 const RestaurantCard = (props)=>{
     const { res1 } = props;
-    const { cloudinaryImageId, name, cuisines, avgRating, costForTwo } = res1?.card?.card?.info;
-    const { deliveryTime } = res1?.card?.card?.info?.sla;
+    const { cloudinaryImageId, name, cuisines, avgRating, costForTwo } = res1?.info;
+    const { deliveryTime } = res1?.info?.sla;
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "res-card",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
                 className: "reslogo",
                 alt: "res-logo",
-                src: (0, _constants.cloudinaryImageId_url) + res1.card.card.info.cloudinaryImageId
+                src: (0, _constants.cloudinaryImageId_url) + cloudinaryImageId
             }, void 0, false, {
                 fileName: "src/components/RestaurantCard.js",
                 lineNumber: 10,
