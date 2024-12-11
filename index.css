@@ -8,7 +8,18 @@
     width: 200px;
 }
 
+.filter{
+    display: flex;
+}
 
+.search-box{
+    margin:10px;
+}
+
+.search-btn{
+    padding:10px;
+    display:flex;
+}
 
 .nav-items > ul {
     font-size:24px;
@@ -53,5 +64,25 @@
 .filter-btn{
     margin: 10px;
     cursor: pointer;
+
+}
+
+
+.shimmer-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shimmer-card{
+    margin:20px;
+    height: 400px;
+    width:200px;
+    background-color: #f0f0f0;
+}
+
+.login{
+    padding:0 20px;
+    margin:10px;
+    cursor:pointer;
 
 }

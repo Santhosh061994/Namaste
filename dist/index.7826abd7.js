@@ -28562,8 +28562,12 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
 var _constants = require("../../utils/constants");
+var _s = $RefreshSig$();
 const Header = ()=>{
+    _s();
+    const [btnNameReact, setBtnNameReact] = (0, _react.useState)("Login");
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "header",
         children: [
@@ -28574,12 +28578,12 @@ const Header = ()=>{
                     src: (0, _constants.logo_url)
                 }, void 0, false, {
                     fileName: "src/components/Header.js",
-                    lineNumber: 7,
+                    lineNumber: 10,
                     columnNumber: 13
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/Header.js",
-                lineNumber: 6,
+                lineNumber: 9,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -28590,48 +28594,60 @@ const Header = ()=>{
                             children: "Home"
                         }, void 0, false, {
                             fileName: "src/components/Header.js",
-                            lineNumber: 12,
+                            lineNumber: 15,
                             columnNumber: 17
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
                             children: "About Us"
                         }, void 0, false, {
                             fileName: "src/components/Header.js",
-                            lineNumber: 13,
+                            lineNumber: 16,
                             columnNumber: 17
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
                             children: "Contact Us"
                         }, void 0, false, {
                             fileName: "src/components/Header.js",
-                            lineNumber: 14,
+                            lineNumber: 17,
                             columnNumber: 17
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
                             children: "Cart"
                         }, void 0, false, {
                             fileName: "src/components/Header.js",
-                            lineNumber: 15,
+                            lineNumber: 18,
+                            columnNumber: 17
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                            className: "login",
+                            onClick: ()=>{
+                                btnNameReact === "Login" ? setBtnNameReact("Logout") : setBtnNameReact("Login");
+                            },
+                            children: btnNameReact
+                        }, void 0, false, {
+                            fileName: "src/components/Header.js",
+                            lineNumber: 19,
                             columnNumber: 17
                         }, undefined)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/Header.js",
-                    lineNumber: 11,
+                    lineNumber: 14,
                     columnNumber: 13
                 }, undefined)
             }, void 0, false, {
                 fileName: "src/components/Header.js",
-                lineNumber: 10,
+                lineNumber: 13,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/Header.js",
-        lineNumber: 5,
+        lineNumber: 8,
         columnNumber: 5
     }, undefined);
 };
+_s(Header, "fLb9w332fDG6L01gKBulzD5eR8k=");
 _c = Header;
 exports.default = Header;
 var _c;
@@ -28642,7 +28658,7 @@ $RefreshReg$(_c, "Header");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","../../utils/constants":"iix0N","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"iix0N":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","../../utils/constants":"iix0N","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq"}],"iix0N":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "logo_url", ()=>logo_url);
@@ -28662,8 +28678,8 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _restaurantCard = require("./RestaurantCard");
 var _restaurantCardDefault = parcelHelpers.interopDefault(_restaurantCard);
-var _mockData = require("../../utils/mockData");
-var _mockDataDefault = parcelHelpers.interopDefault(_mockData);
+var _shimmer = require("./Shimmer");
+var _shimmerDefault = parcelHelpers.interopDefault(_shimmer);
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _s = $RefreshSig$();
@@ -28671,60 +28687,106 @@ const Body = ()=>{
     _s();
     //let listOfRestaurants;
     const [listOfRestaurants, setListOfRestaurant] = (0, _react.useState)([]);
+    const [searchText, setSearchText] = (0, _react.useState)("");
+    const [filteredRestaurant, SetFilteredRestaurant] = (0, _react.useState)([]);
+    // if no dependency array use Effect is called everytime the component renders.
     (0, _react.useEffect)(()=>{
+        console.log("use Effect is called");
         fetchData();
     }, []);
+    // whenever there is a change in state variable it rerenders consistently
+    console.log("body is executed");
     const fetchData = async ()=>{
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.51024246413905&lng=78.36948774755001&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         const json = await data.json();
         console.log("json data");
         console.log(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
-        setListOfRestaurant(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        setListOfRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        SetFilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
+    // conditional rendering
+    if (listOfRestaurants == 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerDefault.default), {}, void 0, false, {
+        fileName: "src/components/Body.js",
+        lineNumber: 40,
+        columnNumber: 13
+    }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "body",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "filter",
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                    className: "filter-btn",
-                    onClick: ()=>{
-                        const filteredList = listOfRestaurants.filter((res)=>res.info.avgRating > 4);
-                        setListOfRestaurant(filteredList);
-                    },
-                    children: "Top Rated Restauramts"
-                }, void 0, false, {
-                    fileName: "src/components/Body.js",
-                    lineNumber: 29,
-                    columnNumber: 17
-                }, undefined)
-            }, void 0, false, {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                        className: "search-box",
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                type: "text",
+                                value: searchText,
+                                onChange: (e)=>{
+                                    setSearchText(e.target.value);
+                                }
+                            }, void 0, false, {
+                                fileName: "src/components/Body.js",
+                                lineNumber: 48,
+                                columnNumber: 21
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                onClick: ()=>{
+                                    const filteredRestaurant = listOfRestaurants.filter((res)=>res.info.name.toLowerCase().includes(searchText.toLowerCase()));
+                                    SetFilteredRestaurant(filteredRestaurant);
+                                },
+                                children: "Search"
+                            }, void 0, false, {
+                                fileName: "src/components/Body.js",
+                                lineNumber: 49,
+                                columnNumber: 21
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/Body.js",
+                        lineNumber: 47,
+                        columnNumber: 17
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        className: "filter-btn",
+                        onClick: ()=>{
+                            const filteredList = listOfRestaurants.filter((res)=>res.info.avgRating > 4);
+                            setListOfRestaurant(filteredList);
+                        },
+                        children: "Top Rated Restauramts"
+                    }, void 0, false, {
+                        fileName: "src/components/Body.js",
+                        lineNumber: 59,
+                        columnNumber: 17
+                    }, undefined)
+                ]
+            }, void 0, true, {
                 fileName: "src/components/Body.js",
-                lineNumber: 28,
+                lineNumber: 46,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "res-container",
-                children: listOfRestaurants.map((restaurant)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restaurantCardDefault.default), {
+                children: filteredRestaurant.map((restaurant)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restaurantCardDefault.default), {
                         res1: restaurant
                     }, restaurant.info.id, false, {
                         fileName: "src/components/Body.js",
-                        lineNumber: 39,
-                        columnNumber: 56
+                        lineNumber: 69,
+                        columnNumber: 57
                     }, undefined))
             }, void 0, false, {
                 fileName: "src/components/Body.js",
-                lineNumber: 37,
+                lineNumber: 67,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/Body.js",
-        lineNumber: 26,
+        lineNumber: 44,
         columnNumber: 9
     }, undefined);
 };
-_s(Body, "MsRAanb87kX3LOYNY+1hxZMGUDM=");
+_s(Body, "CaYq0OM/wPcozzYBGsM+SxCzaKA=");
 _c = Body;
 exports.default = Body;
 var _c;
@@ -28735,7 +28797,7 @@ $RefreshReg$(_c, "Body");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","./RestaurantCard":"bMboU","../../utils/mockData":"doGRK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq"}],"bMboU":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","./RestaurantCard":"bMboU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","./Shimmer":"g6ZGj"}],"bMboU":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$ffb1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -28814,981 +28876,100 @@ $RefreshReg$(_c, "RestaurantCard");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","../../utils/constants":"iix0N","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"doGRK":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","../../utils/constants":"iix0N","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"g6ZGj":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$0b04 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$0b04.prelude(module);
+
+try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-const resData1 = [
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "560961",
-                    "name": "Mehfil",
-                    "cloudinaryImageId": "FOOD_CATALOG/IMAGES/CMS/2024/6/30/3a9fa3c5-98fe-4715-a867-5e042e764c86_bc2bd111-df8c-4d21-bb2a-2a11430ba5b3.jpeg",
-                    "locality": "Kukatpally",
-                    "areaName": "Kukatpally",
-                    "costForTwo": "\u20B9300 for two",
-                    "cuisines": [
-                        "Biryani",
-                        "Chinese",
-                        "Kebabs",
-                        "Tandoor"
-                    ],
-                    "avgRating": 4.1,
-                    "parentId": "637",
-                    "avgRatingString": "4.1",
-                    "totalRatingsString": "10K+",
-                    "promoted": true,
-                    "adTrackingId": "cid=15281021~p=0~adgrpid=15281021#ag1~mp=SWIGGY_IN~bl=FOOD~aet=RESTAURANT~aeid=56096~eid=6f3fdb88-656a-4b71-9256-f161e3e7679e~srvts=1721148189300~collid=83639",
-                    "sla": {
-                        "deliveryTime": 27,
-                        "lastMileTravel": 2.9,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "25-30 mins",
-                        "lastMileTravelString": "2.9 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-17 02:00:00",
-                        "opened": true
-                    },
-                    "badges": {
-                        "imageBadges": [
-                            {
-                                "imageId": "Rxawards/_CATEGORY-Biryani.png",
-                                "description": "Delivery!"
-                            },
-                            {
-                                "imageId": "Rxawards/_CATEGORY-Shawarma.png",
-                                "description": "Delivery!"
-                            }
-                        ]
-                    },
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {
-                                "badgeObject": [
-                                    {
-                                        "attributes": {
-                                            "imageId": "Rxawards/_CATEGORY-Biryani.png",
-                                            "description": "Delivery!"
-                                        }
-                                    },
-                                    {
-                                        "attributes": {
-                                            "imageId": "Rxawards/_CATEGORY-Shawarma.png",
-                                            "description": "Delivery!"
-                                        }
-                                    }
-                                ]
-                            },
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "10% OFF",
-                        "subHeader": "UPTO \u20B940"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "4.0",
-                            "ratingCount": "10K+"
-                        },
-                        "source": "GOOGLE",
-                        "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=56096&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "16174",
-                    "name": "Lucky Multicuisine Restaurant",
-                    "cloudinaryImageId": "d7926c0946838c9cfba48defdc227398",
-                    "locality": "Miyapur",
-                    "areaName": "Miyapur",
-                    "costForTwo": "\u20B9300 for two",
-                    "cuisines": [
-                        "Indian",
-                        "Chinese",
-                        "Tandoor"
-                    ],
-                    "avgRating": 3.8,
-                    "parentId": "18963",
-                    "avgRatingString": "3.8",
-                    "totalRatingsString": "10K+",
-                    "sla": {
-                        "deliveryTime": 31,
-                        "lastMileTravel": 2.6,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "30-35 mins",
-                        "lastMileTravelString": "2.6 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-16 23:59:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {},
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "50% OFF",
-                        "subHeader": "UPTO \u20B9100"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "3.7",
-                            "ratingCount": "5K+"
-                        },
-                        "source": "GOOGLE",
-                        "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=16164&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "34633",
-                    "name": "Srikanya",
-                    "cloudinaryImageId": "FOOD_CATALOG/IMAGES/CMS/2024/6/7/62a84ff4-cf08-4e84-9ab2-1d64f965f567_ba544b48-2f50-4f19-9172-69dde456ded6.jpg",
-                    "locality": "Kothaguda",
-                    "areaName": "Kondapur",
-                    "costForTwo": "\u20B9400 for two",
-                    "cuisines": [
-                        "Biryani",
-                        "Andhra"
-                    ],
-                    "avgRating": 4.1,
-                    "parentId": "7317",
-                    "avgRatingString": "4.1",
-                    "totalRatingsString": "10K+",
-                    "promoted": true,
-                    "adTrackingId": "cid=14941849~p=1~adgrpid=14941849#ag1~mp=SWIGGY_IN~bl=FOOD~aet=RESTAURANT~aeid=34633~eid=02e656b2-2b8a-48de-bec4-2a3c046d3db4~srvts=1721148189300~collid=83639",
-                    "sla": {
-                        "deliveryTime": 44,
-                        "lastMileTravel": 7.8,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "40-45 mins",
-                        "lastMileTravelString": "7.8 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-16 22:30:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "aggregatedDiscountInfoV2": {},
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {},
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "--"
-                        }
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=34633&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "2805178",
-                    "name": "Chickpet Donne Biryani House Miyapur",
-                    "cloudinaryImageId": "xi6bevovng1z9bhpdqkr",
-                    "locality": "Miyapur",
-                    "areaName": "Indira Nagar Colony",
-                    "costForTwo": "\u20B9400 for two",
-                    "cuisines": [
-                        "Biryani"
-                    ],
-                    "avgRating": 4.1,
-                    "parentId": "19396",
-                    "avgRatingString": "4.1",
-                    "totalRatingsString": "10K+",
-                    "sla": {
-                        "deliveryTime": 27,
-                        "lastMileTravel": 3,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "25-30 mins",
-                        "lastMileTravelString": "3.0 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-17 04:30:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {},
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "\u20B975 OFF",
-                        "subHeader": "ABOVE \u20B9299",
-                        "discountTag": "FLAT DEAL"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "4.4",
-                            "ratingCount": "1K+"
-                        },
-                        "source": "GOOGLE",
-                        "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=280578&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "445180",
-                    "name": "Ruchi Curry Point",
-                    "cloudinaryImageId": "fvd69ou5t4zuxikd5vrh",
-                    "locality": "Pragathi Nagar",
-                    "areaName": "Nizampet&Pragathinagar",
-                    "costForTwo": "\u20B9300 for two",
-                    "cuisines": [
-                        "South Indian"
-                    ],
-                    "avgRating": 3.9,
-                    "parentId": "4399",
-                    "avgRatingString": "3.9",
-                    "totalRatingsString": "500+",
-                    "promoted": true,
-                    "adTrackingId": "cid=15374406~p=4~adgrpid=15374406#ag1~mp=SWIGGY_IN~bl=FOOD~aet=RESTAURANT~aeid=445180~eid=02e1466b-1668-4eb3-bbd7-bf0d4655ffd0~srvts=1721148189300~collid=83639",
-                    "sla": {
-                        "deliveryTime": 30,
-                        "lastMileTravel": 5,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "25-30 mins",
-                        "lastMileTravelString": "5.0 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-16 22:30:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "textBased": {},
-                            "imageBased": {},
-                            "textExtendedBadges": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "\u20B975 OFF",
-                        "subHeader": "ABOVE \u20B9299",
-                        "discountTag": "FLAT DEAL"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "--"
-                        }
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=445180&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "56096",
-                    "name": "Mehfil",
-                    "cloudinaryImageId": "FOOD_CATALOG/IMAGES/CMS/2024/6/30/3a9fa3c5-98fe-4715-a867-5e042e764c86_bc2bd111-df8c-4d21-bb2a-2a11430ba5b3.jpeg",
-                    "locality": "Kukatpally",
-                    "areaName": "Kukatpally",
-                    "costForTwo": "\u20B9300 for two",
-                    "cuisines": [
-                        "Biryani",
-                        "Chinese",
-                        "Kebabs",
-                        "Tandoor"
-                    ],
-                    "avgRating": 4.1,
-                    "parentId": "637",
-                    "avgRatingString": "4.1",
-                    "totalRatingsString": "10K+",
-                    "promoted": true,
-                    "adTrackingId": "cid=15281021~p=0~adgrpid=15281021#ag1~mp=SWIGGY_IN~bl=FOOD~aet=RESTAURANT~aeid=56096~eid=6f3fdb88-656a-4b71-9256-f161e3e7679e~srvts=1721148189300~collid=83639",
-                    "sla": {
-                        "deliveryTime": 27,
-                        "lastMileTravel": 2.9,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "25-30 mins",
-                        "lastMileTravelString": "2.9 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-17 02:00:00",
-                        "opened": true
-                    },
-                    "badges": {
-                        "imageBadges": [
-                            {
-                                "imageId": "Rxawards/_CATEGORY-Biryani.png",
-                                "description": "Delivery!"
-                            },
-                            {
-                                "imageId": "Rxawards/_CATEGORY-Shawarma.png",
-                                "description": "Delivery!"
-                            }
-                        ]
-                    },
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {
-                                "badgeObject": [
-                                    {
-                                        "attributes": {
-                                            "imageId": "Rxawards/_CATEGORY-Biryani.png",
-                                            "description": "Delivery!"
-                                        }
-                                    },
-                                    {
-                                        "attributes": {
-                                            "imageId": "Rxawards/_CATEGORY-Shawarma.png",
-                                            "description": "Delivery!"
-                                        }
-                                    }
-                                ]
-                            },
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "10% OFF",
-                        "subHeader": "UPTO \u20B940"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "4.0",
-                            "ratingCount": "10K+"
-                        },
-                        "source": "GOOGLE",
-                        "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=56096&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "16164",
-                    "name": "Lucky Multicuisine Restaurant",
-                    "cloudinaryImageId": "d7926c0946838c9cfba48defdc227398",
-                    "locality": "Miyapur",
-                    "areaName": "Miyapur",
-                    "costForTwo": "\u20B9300 for two",
-                    "cuisines": [
-                        "Indian",
-                        "Chinese",
-                        "Tandoor"
-                    ],
-                    "avgRating": 3.8,
-                    "parentId": "18963",
-                    "avgRatingString": "3.8",
-                    "totalRatingsString": "10K+",
-                    "sla": {
-                        "deliveryTime": 31,
-                        "lastMileTravel": 2.6,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "30-35 mins",
-                        "lastMileTravelString": "2.6 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-16 23:59:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {},
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "50% OFF",
-                        "subHeader": "UPTO \u20B9100"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "3.7",
-                            "ratingCount": "5K+"
-                        },
-                        "source": "GOOGLE",
-                        "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=16164&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "34663",
-                    "name": "Srikanya",
-                    "cloudinaryImageId": "FOOD_CATALOG/IMAGES/CMS/2024/6/7/62a84ff4-cf08-4e84-9ab2-1d64f965f567_ba544b48-2f50-4f19-9172-69dde456ded6.jpg",
-                    "locality": "Kothaguda",
-                    "areaName": "Kondapur",
-                    "costForTwo": "\u20B9400 for two",
-                    "cuisines": [
-                        "Biryani",
-                        "Andhra"
-                    ],
-                    "avgRating": 4.1,
-                    "parentId": "7317",
-                    "avgRatingString": "4.1",
-                    "totalRatingsString": "10K+",
-                    "promoted": true,
-                    "adTrackingId": "cid=14941849~p=1~adgrpid=14941849#ag1~mp=SWIGGY_IN~bl=FOOD~aet=RESTAURANT~aeid=34633~eid=02e656b2-2b8a-48de-bec4-2a3c046d3db4~srvts=1721148189300~collid=83639",
-                    "sla": {
-                        "deliveryTime": 44,
-                        "lastMileTravel": 7.8,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "40-45 mins",
-                        "lastMileTravelString": "7.8 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-16 22:30:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "aggregatedDiscountInfoV2": {},
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {},
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "--"
-                        }
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=34633&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "280578",
-                    "name": "Chickpet Donne Biryani House Miyapur",
-                    "cloudinaryImageId": "xi6bevovng1z9bhpdqkr",
-                    "locality": "Miyapur",
-                    "areaName": "Indira Nagar Colony",
-                    "costForTwo": "\u20B9400 for two",
-                    "cuisines": [
-                        "Biryani"
-                    ],
-                    "avgRating": 4.1,
-                    "parentId": "19396",
-                    "avgRatingString": "4.1",
-                    "totalRatingsString": "10K+",
-                    "sla": {
-                        "deliveryTime": 27,
-                        "lastMileTravel": 3,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "25-30 mins",
-                        "lastMileTravelString": "3.0 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-17 04:30:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "imageBased": {},
-                            "textExtendedBadges": {},
-                            "textBased": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "\u20B975 OFF",
-                        "subHeader": "ABOVE \u20B9299",
-                        "discountTag": "FLAT DEAL"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "4.4",
-                            "ratingCount": "1K+"
-                        },
-                        "source": "GOOGLE",
-                        "sourceIconImageId": "v1704440323/google_ratings/rating_google_tag"
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=280578&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    },
-    {
-        "card": {
-            "card": {
-                "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
-                "info": {
-                    "id": "4451801",
-                    "name": "Ruchi Curry Point",
-                    "cloudinaryImageId": "fvd69ou5t4zuxikd5vrh",
-                    "locality": "Pragathi Nagar",
-                    "areaName": "Nizampet&Pragathinagar",
-                    "costForTwo": "\u20B9300 for two",
-                    "cuisines": [
-                        "South Indian"
-                    ],
-                    "avgRating": 3.9,
-                    "parentId": "4399",
-                    "avgRatingString": "3.9",
-                    "totalRatingsString": "500+",
-                    "promoted": true,
-                    "adTrackingId": "cid=15374406~p=4~adgrpid=15374406#ag1~mp=SWIGGY_IN~bl=FOOD~aet=RESTAURANT~aeid=445180~eid=02e1466b-1668-4eb3-bbd7-bf0d4655ffd0~srvts=1721148189300~collid=83639",
-                    "sla": {
-                        "deliveryTime": 30,
-                        "lastMileTravel": 5,
-                        "serviceability": "SERVICEABLE",
-                        "slaString": "25-30 mins",
-                        "lastMileTravelString": "5.0 km",
-                        "iconType": "ICON_TYPE_EMPTY"
-                    },
-                    "availability": {
-                        "nextCloseTime": "2024-07-16 22:30:00",
-                        "opened": true
-                    },
-                    "badges": {},
-                    "isOpen": true,
-                    "type": "F",
-                    "badgesV2": {
-                        "entityBadges": {
-                            "textBased": {},
-                            "imageBased": {},
-                            "textExtendedBadges": {}
-                        }
-                    },
-                    "aggregatedDiscountInfoV3": {
-                        "header": "\u20B975 OFF",
-                        "subHeader": "ABOVE \u20B9299",
-                        "discountTag": "FLAT DEAL"
-                    },
-                    "loyaltyDiscoverPresentationInfo": {
-                        "logoCtx": {
-                            "text": "BENEFITS",
-                            "logo": "v1634558776/swiggy_one/OneLogo_3x.png"
-                        },
-                        "freedelMessage": "FREE DELIVERY"
-                    },
-                    "orderabilityCommunication": {
-                        "title": {},
-                        "subTitle": {},
-                        "message": {},
-                        "customIcon": {}
-                    },
-                    "differentiatedUi": {
-                        "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-                        "differentiatedUiMediaDetails": {
-                            "mediaType": "ADS_MEDIA_ENUM_IMAGE",
-                            "lottie": {},
-                            "video": {}
-                        }
-                    },
-                    "reviewsSummary": {},
-                    "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-                    "restaurantOfferPresentationInfo": {},
-                    "externalRatings": {
-                        "aggregatedRating": {
-                            "rating": "--"
-                        }
-                    },
-                    "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
-                },
-                "analytics": {},
-                "cta": {
-                    "link": "swiggy://menu?restaurant_id=445180&source=collection&query=Biryani",
-                    "text": "RESTAURANT_MENU",
-                    "type": "DEEPLINK"
-                },
-                "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food"
-            },
-            "relevance": {
-                "type": "RELEVANCE_TYPE_ON_MENU_RETURN",
-                "sectionId": "MENU_RETURN_FOOD"
-            }
-        }
-    }
-];
-exports.default = resData1;
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+const Shimmer = ()=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "shimmer-container",
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 4,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 5,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 6,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 7,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 8,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 9,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 10,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 11,
+                columnNumber: 13
+            }, undefined),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "shimmer-card"
+            }, void 0, false, {
+                fileName: "src/components/Shimmer.js",
+                lineNumber: 12,
+                columnNumber: 13
+            }, undefined)
+        ]
+    }, void 0, true, {
+        fileName: "src/components/Shimmer.js",
+        lineNumber: 3,
+        columnNumber: 9
+    }, undefined);
+};
+_c = Shimmer;
+exports.default = Shimmer;
+var _c;
+$RefreshReg$(_c, "Shimmer");
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["APLPM","1xC6H","2Ew96"], "2Ew96", "parcelRequire278f")
+  $parcel$ReactRefreshHelpers$0b04.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["APLPM","1xC6H","2Ew96"], "2Ew96", "parcelRequire278f")
 
 //# sourceMappingURL=index.7826abd7.js.map

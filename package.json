@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This is Namaste by Santhosh",
   "main": "App.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html",
@@ -27,11 +27,12 @@
   },
   "homepage": "https://github.com/Santhosh061994/Namaste#readme",
   "devDependencies": {
-    "parcel": "^2.12.0",
+    "parcel": "^2.13.2",
     "process": "^0.11.10"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
   }
 }

@@ -8,6 +8,19 @@
   width: 200px;
 }
 
+.filter {
+  display: flex;
+}
+
+.search-box {
+  margin: 10px;
+}
+
+.search-btn {
+  padding: 10px;
+  display: flex;
+}
+
 .nav-items > ul {
   font-size: 24px;
   list-style-type: none;
@@ -47,5 +60,23 @@
 .filter-btn {
   cursor: pointer;
   margin: 10px;
+}
+
+.shimmer-container {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.shimmer-card {
+  background-color: #f0f0f0;
+  width: 200px;
+  height: 400px;
+  margin: 20px;
+}
+
+.login {
+  cursor: pointer;
+  margin: 10px;
+  padding: 0 20px;
 }
 /*# sourceMappingURL=index.9e4c6fd2.css.map */
